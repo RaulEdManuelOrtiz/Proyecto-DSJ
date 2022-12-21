@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TopDownCarController : MonoBehaviour
 {
@@ -242,11 +243,11 @@ public class TopDownCarController : MonoBehaviour
     //Detect Jump trigger
     void OnTriggerEnter2D(Collider2D collider2d)
     {
-        if (collider2d.CompareTag("Jump"))
+        if (collider2d.gameObject.layer == 6 || collider2d.gameObject.layer == 7)
         {
-            //Get the jump data from the jump
-            JumpData jumpData = collider2d.GetComponent<JumpData>();
-            Jump(jumpData.jumpHeightScale, jumpData.jumpPushScale);
+            CoinScript.collectedCoins = 0;
+            MainMenu.lastLevel = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
